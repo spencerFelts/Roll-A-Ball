@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,8 +9,13 @@ public class PlayerController : MonoBehaviour
     public Text scoreText;
     private int count = 0;
     public Text winText;
+    public Button toCredit;
+    public Toggle ballSize;
 
-
+    private void Start()
+    {
+        ballSize.GetComponent<Toggle>().isOn = false;
+    }
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -32,6 +38,24 @@ public class PlayerController : MonoBehaviour
         if (count >= 12)
         {
             winText.gameObject.SetActive(true);
+            toCredit.gameObject.SetActive(true);
         }
     }
+    public void BallResize()
+    {
+        if (ballSize.isOn)
+        {
+            transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
+    }
+
+    public void AdjustSpeed(float newSpeed)
+    {
+        Time.timeScale = newSpeed;
+    }
+
 }
